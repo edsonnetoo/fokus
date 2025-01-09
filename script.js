@@ -1,3 +1,5 @@
+import { iniciaOuPausa } from "./js/contagem.js";
+
 const html = document.querySelector("html");
 const botaoFoco = document.querySelector(".app__card-button--foco");
 const botaoDescansoCurto = document.querySelector(".app__card-button--curto");
@@ -5,7 +7,8 @@ const botaoDescansoLongo = document.querySelector(".app__card-button--longo");
 const banner = document.querySelector(".app__image");
 const titulo = document.querySelector(".app__title");
 const botoes = document.querySelectorAll(".app__card-button");
-const musicaFocoInput = document.getElementById("alternar-musica"); 
+const musicaFocoInput = document.getElementById("alternar-musica");
+const botaoStartPause = document.getElementById("start-pause"); 
 const musica = new Audio('/sons/luna-rise-part-one.mp3');
 musica.loop = true;
 
@@ -52,3 +55,5 @@ function alterarContexto(contexto) {
             break;
     }
 }
+
+botaoStartPause.addEventListener("click", iniciaOuPausa);
