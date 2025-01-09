@@ -1,4 +1,4 @@
-import { iniciaOuPausa } from "./js/contagem.js";
+import { alteraTempo, iniciaOuPausa, mostrarTempo } from "./js/contagem.js";
 
 const html = document.querySelector("html");
 const botaoFoco = document.querySelector(".app__card-button--foco");
@@ -9,6 +9,7 @@ const titulo = document.querySelector(".app__title");
 const botoes = document.querySelectorAll(".app__card-button");
 const musicaFocoInput = document.getElementById("alternar-musica");
 const botaoStartPause = document.getElementById("start-pause"); 
+
 const musica = new Audio('/sons/luna-rise-part-one.mp3');
 musica.loop = true;
 
@@ -21,21 +22,25 @@ musicaFocoInput.addEventListener("change", () => {
 })
 
 botaoFoco.addEventListener("click", () => {
+    alteraTempo('foco');
     alterarContexto('foco');
     botaoFoco.classList.add("active");
 });
 
 botaoDescansoCurto.addEventListener("click", () => {
+    alteraTempo('descanso-curto');
     alterarContexto('descanso-curto');
     botaoDescansoCurto.classList.add("active");
 });
 
 botaoDescansoLongo.addEventListener("click", () => {
+    alteraTempo('descanso-longo');
     alterarContexto('descanso-longo');
     botaoDescansoLongo.classList.add("active");
 });
 
 function alterarContexto(contexto) {
+    mostrarTempo();
     botoes.forEach(function (contexto) {
         contexto.classList.remove('active');
     });
@@ -57,3 +62,4 @@ function alterarContexto(contexto) {
 }
 
 botaoStartPause.addEventListener("click", iniciaOuPausa);
+mostrarTempo();

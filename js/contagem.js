@@ -1,31 +1,62 @@
-let tempoDecorridoEmSegundos = 5;
+let tempoDecorridoEmSegundos = 1500;
 let intervaloId = null;
+const spanStartPause = document.querySelector("#start-pause span");
+const iconeBotao = document.querySelector(".app__card-primary-button-icon");
+const tempoNaTela = document.querySelector("#timer");
+
 const somPlay = new Audio("./sons/play.wav");
 const somPause = new Audio("./sons/pause.mp3");
 const somFim = new Audio("./sons/beep.mp3");
 
 export function contagemRegressiva() {
     if (tempoDecorridoEmSegundos <= 0) {
-        zerar();
-        somFim.play();
+        // somFim.play();
         alert("Tempo finalizado!");
+        zerar();
         return;
     }
     tempoDecorridoEmSegundos -= 1;
-    console.log("Olho no tempo:", tempoDecorridoEmSegundos);
+    mostrarTempo();
 }
 
 export function iniciaOuPausa() {
     if (intervaloId) {
+        
         zerar();
         somPause.play();
         return;
     }
+    iconeBotao.setAttribute("src", "./imagens/pause.png");
     somPlay.play();
     intervaloId = setInterval(contagemRegressiva, 1000);
+    spanStartPause.textContent = "Pausar";
 }
 
 function zerar() {
     clearInterval(intervaloId);
+    iconeBotao.setAttribute("src", "./imagens/play_arrow.png");
+    spanStartPause.textContent = "Começar";
     intervaloId = null;
+}
+
+export function alteraTempo(contexto) {
+    switch (contexto) {
+        case "foco":
+            tempoDecorridoEmSegundos = 1500;
+            break;
+        case "descanso-curto":
+            tempoDecorridoEmSegundos = 300;
+            break;
+        case "descanso-longo":
+            tempoDecorridoEmSegundos = 900;
+            break;
+        default:
+            break;
+    }
+}
+
+export function mostrarTempo() {
+    const tempo = new Date(tempoDecorridoEmSegundos * 1000);
+    const tempoFormatado = tempo.toLocaleTimeString('pt-Br', {minute: '2-digit', second: '2-digit'});
+    tempoNaTela.innerHTML = `${tempoFormatado}`;
 }
