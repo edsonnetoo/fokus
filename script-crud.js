@@ -2,8 +2,13 @@ const botaoAdicionarTarefa = document.querySelector(".app__button--add-task");
 const formAdicionarTarefa = document.querySelector(".app__form-add-task");
 const textArea = document.querySelector(".app__form-textarea");
 const ulTarefas = document.querySelector(".app__section-task-list");
+const botaoCancelarForm = document.querySelector(".app__form-footer__button--cancel");
 
 const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+
+function atualizarTarefas() {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas)); //Transforma o Objeto em string
+}
 
 function criarElementoTarefa(tarefa) {
     const li = document.createElement('li');
@@ -23,8 +28,19 @@ function criarElementoTarefa(tarefa) {
     paragrafo.textContent = tarefa.descricao;
 
     const botao = document.createElement('button');
-    const imagemBotao = document.createElement('img');
     botao.classList.add("app_button-edit");
+
+    botao.onclick = () => {
+        const novaDescricao = prompt("Insira o novo nome da tarefa");
+        console.log('Nova desc:', novaDescricao);
+        if (novaDescricao) {
+            paragrafo.textContent = novaDescricao;
+            tarefa.descricao = novaDescricao;
+            atualizarTarefas();
+        }
+    }
+
+    const imagemBotao = document.createElement('img');
     imagemBotao.setAttribute("src", "/imagens/edit.png");
     botao.append(imagemBotao);
 
@@ -39,6 +55,11 @@ botaoAdicionarTarefa.addEventListener("click", () => {
     formAdicionarTarefa.classList.toggle('hidden');
 });
 
+botaoCancelarForm.addEventListener("click", () => {
+    textArea.value = "";
+    formAdicionarTarefa.classList.toggle('hidden');
+})
+
 formAdicionarTarefa.addEventListener("submit", (evento) => {
     evento.preventDefault();
     const tarefa = {
@@ -47,7 +68,7 @@ formAdicionarTarefa.addEventListener("submit", (evento) => {
     tarefas.push(tarefa);
     const elementoTarefa = criarElementoTarefa(tarefa);
     ulTarefas.append(elementoTarefa);
-    localStorage.setItem('tarefas', JSON.stringify(tarefas)); //Transforma o Objeto em string
+    atualizarTarefas(); 
     textArea.value = '';
     formAdicionarTarefa.classList.add('hidden');
 });
