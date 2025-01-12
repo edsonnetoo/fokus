@@ -1,4 +1,4 @@
-let tempoDecorridoEmSegundos = 1500;
+let tempoDecorridoEmSegundos = 30;
 let intervaloId = null;
 const spanStartPause = document.querySelector("#start-pause span");
 const iconeBotao = document.querySelector(".app__card-primary-button-icon");
@@ -42,13 +42,13 @@ function zerar() {
 export function alteraTempo(contexto) {
     switch (contexto) {
         case "foco":
-            tempoDecorridoEmSegundos = 1500;
+            tempoDecorridoEmSegundos = 30;
             break;
         case "descanso-curto":
-            tempoDecorridoEmSegundos = 300;
+            tempoDecorridoEmSegundos = 5;
             break;
         case "descanso-longo":
-            tempoDecorridoEmSegundos = 900;
+            tempoDecorridoEmSegundos = 15;
             break;
         default:
             break;
