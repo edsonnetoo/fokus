@@ -1,5 +1,6 @@
 let tempoDecorridoEmSegundos = 30;
 let intervaloId = null;
+const html = document.querySelector("html");
 const spanStartPause = document.querySelector("#start-pause span");
 const iconeBotao = document.querySelector(".app__card-primary-button-icon");
 const tempoNaTela = document.querySelector("#timer");
@@ -12,6 +13,11 @@ export function contagemRegressiva() {
     if (tempoDecorridoEmSegundos <= 0) {
         // somFim.play();
         alert("Tempo finalizado!");
+        const focoAtivo = html.getAttribute('data-contexto') == 'foco';
+        if (focoAtivo) {
+            const evento = new CustomEvent('FocoFinalizado');
+            document.dispatchEvent(evento);
+        }
         zerar();
         return;
     }
